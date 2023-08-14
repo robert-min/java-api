@@ -29,4 +29,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<UserEntity> filterScore(int score) {
+        return userRepository.findAllScoreGreaterThen(score);
+    }
+
 }
