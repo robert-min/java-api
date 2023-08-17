@@ -1,11 +1,11 @@
 package com.example.simpleboard.board.db;
 
+import com.example.simpleboard.post.db.PostEntity;
 import lombok.*;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +19,16 @@ public class BoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String boardName;
+
     private String status;
+
+    @OneToMany(
+            mappedBy = "board"
+    )
+    @Builder.Default
+    @Where(clause = "status = 'REGISTERED'")
+    @org.hibernate.annotations.OrderBy(clause = "id desc")
+    private List<PostEntity> postList = List.of();
 }
