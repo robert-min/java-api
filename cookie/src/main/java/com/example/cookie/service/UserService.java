@@ -14,7 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void login(
+    public String login(
             LoginRequest loginRequest,
             HttpServletResponse httpServletResponse
     ) {
@@ -26,20 +26,21 @@ public class UserService {
             var userDto = optionalUser.get();
 
             if (userDto.getPassword().equals(pw)) {
-                // save cookie
-                var cookie = new Cookie("authorization-cookie", userDto.getId());
-                cookie.setDomain("localhost");
-                cookie.setPath("/");
-                cookie.setHttpOnly(true);
-//                cookie.setSecure(true);
-                cookie.setMaxAge(-1);   // 세션과 동일
-
-                httpServletResponse.addCookie(cookie);
+                return userDto.getId();
+//                // save cookie
+//                var cookie = new Cookie("authorization-cookie", userDto.getId());
+//                cookie.setDomain("localhost");
+//                cookie.setPath("/");
+//                cookie.setHttpOnly(true);
+////                cookie.setSecure(true);
+//                cookie.setMaxAge(-1);   // 세션과 동일
+//
+//                httpServletResponse.addCookie(cookie);
 
             }
         } else {
             throw new RuntimeException("User not found");
         }
-
+        return null;
     }
 }

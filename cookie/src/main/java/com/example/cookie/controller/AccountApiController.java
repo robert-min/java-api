@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 public class AccountApiController {
     private final UserService userService;
     @PostMapping("/login")
-    public void login(
+    public String login(
             @RequestBody
             LoginRequest loginRequest,
             HttpServletResponse httpServletResponse
     ) {
-        userService.login(loginRequest, httpServletResponse);
+        return userService.login(loginRequest, httpServletResponse);
     }
 }
